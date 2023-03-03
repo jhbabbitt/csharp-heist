@@ -57,6 +57,14 @@ namespace BankHeist
 
             int teamSkillLevel = 0;
 
+            int successRuns = 0;
+            int failedRuns = 0;
+
+            foreach (KeyValuePair<string, TeamMember> member in TheSquad)
+                {
+                    teamSkillLevel += member.Value.SkillLevel;
+                }
+
             for (int i = 0; i < trailRunsInt; i++)
             {
                 Random r = new Random();
@@ -64,23 +72,22 @@ namespace BankHeist
                 bankDifficulty += luckValue;
 
 
-
-                foreach (KeyValuePair<string, TeamMember> member in TheSquad)
-                {
-                    teamSkillLevel += member.Value.SkillLevel;
-                }
-
                 System.Console.WriteLine($"Your team's skill level is {teamSkillLevel}. The bank's difficulty level is {bankDifficulty}.");
 
                 if (teamSkillLevel >= bankDifficulty)
                 {
                     System.Console.WriteLine("we're rich!");
+                    successRuns++;
                 }
                 else
                 {
                     System.Console.WriteLine("W A S T E D");
+                    failedRuns++;
                 }
+
+                bankDifficulty = int.Parse(difficultyLevel);
             }
+            System.Console.WriteLine($"You robbed the banks {successRuns} times and got caught {failedRuns} times.");
         }
     }
 }
